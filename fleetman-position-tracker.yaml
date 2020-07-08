@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: position-tracker
+spec:
+ selector:
+  matchLabels:
+   app: position-tracker
+ replicas: 1
+ template:
+  metadata:
+   labels:
+    app: position-tracker
+  spec:
+   containers:
+   - name: fleetman-position-tracker
+     image: richardchesterwood/k8s-fleetman-position-tracker:release2
+     env:
+      - name: SPRING_PROFILES_ACTIVE
+        value: production-microservice
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: fleetman-position-tracker
+spec:
+ selector:
+  app: position-tracker
+ ports:
+  - name: position-tracker
+    port: 8080
+   
+ type: ClusterIP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#docker container run -d --network fleetman --name fleetman-position-tracker -e "SPRING_PROFILES_ACTIVE=local-microservice" richardchesterwood/k8s-fleetman-position-#tracker:{release}
