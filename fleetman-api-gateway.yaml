@@ -18,6 +18,8 @@ spec:
         env:
           - name: SPRING_PROFILES_ACTIVE
             value: production-microservice 
+     nodeSelector:
+        web: microservice
 
 
 ---
