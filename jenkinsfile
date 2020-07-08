@@ -1,0 +1,32 @@
+pipeline {
+
+  environment {
+    registry = "192.168.43.26:5000/sandiptest/myweb"
+    dockerImage = ""
+  }
+
+  agent any
+
+  stages {
+
+    stage('Checkout Source') {
+      steps {
+        sh 'echo ${BUILD_NUMBER}'
+        git 'https://github.com/sandipchatterjee540/microservice-deploy-in-K8S-pipeline.git'
+      }
+    }
+    stage('Deploy All Micro Services') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "fleetman-queue.yaml", kubeconfigId: "KUBECONFIG")
+          kubernetesDeploy(configs: "fleetman_simulater.yaml", kubeconfigId: "KUBECONFIG")
+          kubernetesDeploy(configs: "fleetman-position-tracker.yaml", kubeconfigId: "KUBECONFIG")
+          kubernetesDeploy(configs: "fleetman-api-gateway.yaml", kubeconfigId: "KUBECONFIG")
+          kubernetesDeploy(configs: "fleetman-webapp.yaml", kubeconfigId: "KUBECONFIG")
+        }
+      }
+    }
+
+  }
+
+}
