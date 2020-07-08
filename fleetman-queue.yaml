@@ -14,6 +14,8 @@ spec:
    containers:
    - name: fleetman-queue
      image: richardchesterwood/k8s-fleetman-queue:release2
+   nodeSelector:
+     web: microservice
 
 ---
 # service in here
