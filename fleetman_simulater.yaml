@@ -17,7 +17,7 @@ spec:
      image: richardchesterwood/k8s-fleetman-position-simulator:release2
      env:
      - name: SPRING_PROFILES_ACTIVE
-       value: production-microservicenodeSelector:
+       value: production-microservice
  
    nodeSelector:
      web: microservice
